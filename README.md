@@ -115,7 +115,7 @@ Connections:
 
 ### 📊 BFS Traversal Diagram
 
-![BFS Traversal](bfs_city_traversal.png)
+![BFS Traversal](https://github.com/FW-Zalando-Java-Backend-Engineer/CityConnect/blob/solution/output.png)
 
 ---
 
