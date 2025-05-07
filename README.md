@@ -1,27 +1,33 @@
+### ✅ Step-by-Step Solution to CityConnect – With Visual and Explanation
 
-# 🛣️ CityConnect – BFS Traversal Solution
-
-This exercise simulates a road network between cities and uses **Breadth-First Search (BFS)** to check if two cities are connected.
-
----
-
-## 🧩 Problem Overview
-
-- Each **city** is a node.
-- Each **road** is an undirected edge.
-- Implement functionality to:
-  - Add cities
-  - Connect cities with roads
-  - Check if two cities are reachable
-  - List directly connected cities
+Let's build a simplified example where cities are nodes and roads are undirected edges. Here’s a step-by-step breakdown:
 
 ---
 
-## ✅ Solution Walkthrough
+![image](https://github.com/user-attachments/assets/a3119116-c660-4005-a41a-eefe9d131c2b)
 
-### 📦 Data Structure
 
-Use a map to represent city connections:
+### 🌍 Graph Overview (Above Image)
+
+This graph shows a road network:
+
+```
+Paris ─── Lyon ─── Marseille ─── Nice
+  │        │
+  │        └── Dijon
+  └── Lille
+```
+
+---
+
+### 🧱 Step 1: Data Structure Design
+
+Use:
+
+* `Map<String, List<String>>` for the graph (adjacency list)
+* Each city is a key; each value is a list of directly connected cities
+
+**Java Concept**:
 
 ```java
 Map<String, List<String>> roadMap = new HashMap<>();
@@ -29,7 +35,9 @@ Map<String, List<String>> roadMap = new HashMap<>();
 
 ---
 
-### 🧱 Step 1: Add a City
+### 🧩 Step 2: Adding Cities
+
+Method:
 
 ```java
 public void addCity(String name) {
@@ -37,11 +45,16 @@ public void addCity(String name) {
 }
 ```
 
-Adds a city if it doesn't already exist.
+📘 **Explanation**:
+
+* Only adds if city doesn't already exist.
+* Ensures each city has a "friends list" (connected cities).
 
 ---
 
-### 🔗 Step 2: Connect Two Cities
+### 🔗 Step 3: Connecting Two Cities
+
+Method:
 
 ```java
 public void connectCities(String city1, String city2) {
@@ -52,11 +65,16 @@ public void connectCities(String city1, String city2) {
 }
 ```
 
-Creates an undirected road between two cities.
+📘 **Explanation**:
+
+* Ensures both cities are present.
+* Adds bidirectional (undirected) roads.
 
 ---
 
-### 🚀 Step 3: Check Reachability (BFS)
+### 🔍 Step 4: Is City Reachable (BFS)
+
+Method:
 
 ```java
 public boolean isReachable(String source, String destination) {
@@ -79,53 +97,45 @@ public boolean isReachable(String source, String destination) {
 }
 ```
 
-Performs a layer-by-layer search to find a connection.
+📘 **Explanation**:
+
+* Breadth-First Search: checks city-by-city layer until destination is found or all options are exhausted.
+* Prevents revisiting cities using a `Set`.
 
 ---
 
-### 🧠 Example: Is Paris connected to Nice?
+### 📄 Example Trace: `isReachable("Paris", "Nice")`
 
-Cities:
-- Paris
-- Lyon
-- Marseille
-- Nice
-- Dijon
-- Lille
+**Queue Evolution**:
 
-Connections:
-- Paris - Lyon
-- Paris - Lille
-- Lyon - Marseille
-- Lyon - Dijon
-- Marseille - Nice
+```
+[Paris]
+→ Poll Paris, add Lyon, Lille
+[**Lyon**, Lille]
+→ Poll Lyon, add Marseille, Dijon
+[**Lille**, Marseille, Dijon]
+→ Poll Marseille, add Nice
+[**Dijon**, **Nice**] → FOUND!
+```
 
 ---
 
-### 🔄 BFS Order (From Paris to Nice)
+### 🧠 How to Read the Diagram:
 
-1. Paris
-2. Lyon
-3. Lille
-4. Marseille
-5. Dijon
-6. **Nice** ✅
+![image](https://github.com/user-attachments/assets/300ef353-df14-43fb-aea5-239cefcc2fde)
 
----
 
-### 📊 BFS Traversal Diagram
+* **Blue arrows** show the order in which cities were visited during BFS.
+* **Numbers** next to each city indicate the **visit sequence**.
+* **Dashed lines** represent other connections in the network that BFS *did not* follow directly at that step.
 
-![BFS Traversal](output.png)
+### 🔄 BFS Order:
 
----
+1. **Paris** (start)
+2. **Lyon** and **Lille**
+3. From Lyon → **Marseille** and **Dijon**
+4. From Marseille → **Nice** (target found ✅)
 
-## 🧪 Bonus Ideas
+This is a classic BFS wave-like expansion from the source outward.
 
-- Prevent duplicate connections
-- Count hops between cities
-- Show shortest path
-- Add or remove cities dynamically
 
----
-
-Happy coding! 🚀
